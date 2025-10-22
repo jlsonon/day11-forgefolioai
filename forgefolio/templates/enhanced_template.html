@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ForgeFolio - AI-Powered Portfolio Generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='enhanced_style.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1><i class="fas fa-magic"></i> ForgeFolio</h1>
+                <p class="subtitle">AI-Powered Professional Portfolio Generator</p>
+                <div class="demo-badge">
+                    <i class="fas fa-star"></i> by Jericho Sonon
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Quick Start Section -->
+            <section class="quick-start-section">
+                <h2><i class="fas fa-rocket"></i> Quick Start</h2>
+                <div class="sample-profiles">
+                    <button class="sample-btn" data-profile="software_developer">
+                        <i class="fas fa-code"></i> Software Developer
+                    </button>
+                    <button class="sample-btn" data-profile="data_scientist">
+                        <i class="fas fa-chart-line"></i> Data Scientist
+                    </button>
+                    <button class="sample-btn" data-profile="ui_designer">
+                        <i class="fas fa-palette"></i> UI/UX Designer
+                    </button>
+                    <button class="sample-btn" data-profile="marketing_manager">
+                        <i class="fas fa-bullhorn"></i> Marketing Manager
+                    </button>
+                </div>
+            </section>
+
+            <!-- Form Section -->
+            <section class="form-section">
+                <div class="form-container">
+                    <form id="portfolioForm" class="portfolio-form">
+                        <!-- Template Selection -->
+                        <div class="form-group template-selection">
+                            <label><i class="fas fa-paint-brush"></i> Choose Template</label>
+                            <div class="template-options">
+                                <div class="template-option" data-template="tech_modern">
+                                    <div class="template-preview tech-preview"></div>
+                                    <span>Modern Tech</span>
+                                </div>
+                                <div class="template-option" data-template="creative_artist">
+                                    <div class="template-preview creative-preview"></div>
+                                    <span>Creative Artist</span>
+                                </div>
+                                <div class="template-option" data-template="business_executive">
+                                    <div class="template-preview business-preview"></div>
+                                    <span>Business Executive</span>
+                                </div>
+                                <div class="template-option" data-template="academic_researcher">
+                                    <div class="template-preview academic-preview"></div>
+                                    <span>Academic Researcher</span>
+                                </div>
+                                <div class="template-option" data-template="freelancer_creative">
+                                    <div class="template-preview freelance-preview"></div>
+                                    <span>Freelancer</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Personal Information -->
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="name"><i class="fas fa-user"></i> Full Name *</label>
+                                <input type="text" id="name" name="name" required placeholder="Enter your full name">
+                            </div>
+                            <div class="form-group">
+                                <label for="profession"><i class="fas fa-briefcase"></i> Profession *</label>
+                                <input type="text" id="profession" name="profession" required placeholder="e.g., Software Developer">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="experience"><i class="fas fa-chart-line"></i> Professional Experience</label>
+                            <textarea id="experience" name="experience" rows="4" placeholder="Describe your professional experience, achievements, and career highlights..."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="education"><i class="fas fa-graduation-cap"></i> Education</label>
+                            <textarea id="education" name="education" rows="3" placeholder="List your educational background, degrees, certifications, and relevant coursework..."></textarea>
+                        </div>
+
+                        <!-- Skills Section -->
+                        <div class="form-group">
+                            <label for="skills"><i class="fas fa-tools"></i> Technical Skills</label>
+                            <div class="skills-input">
+                                <input type="text" id="skillInput" placeholder="Add a skill and press Enter">
+                                <button type="button" id="addSkill" class="btn-secondary">
+                                    <i class="fas fa-plus"></i> Add
+                                </button>
+                            </div>
+                            <div id="skillsList" class="skills-list"></div>
+                        </div>
+
+                        <!-- Projects Section -->
+                        <div class="form-group">
+                            <label for="projects"><i class="fas fa-project-diagram"></i> Key Projects</label>
+                            <div class="projects-input">
+                                <input type="text" id="projectInput" placeholder="Add a project and press Enter">
+                                <button type="button" id="addProject" class="btn-secondary">
+                                    <i class="fas fa-plus"></i> Add
+                                </button>
+                            </div>
+                        <div id="projectsList" class="projects-list"></div>
+                    </div>
+
+                    <!-- Contact Information Section -->
+                    <div class="form-section-header">
+                        <h3><i class="fas fa-envelope"></i> Contact Information</h3>
+                        <p>Provide your contact details (optional - will be auto-generated if not provided)</p>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email"><i class="fas fa-envelope"></i> Email</label>
+                            <input type="email" id="email" name="email" placeholder="your.email@domain.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="phone"><i class="fas fa-phone"></i> Phone</label>
+                            <input type="tel" id="phone" name="phone" placeholder="+1 (555) 123-4567">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="linkedin"><i class="fab fa-linkedin"></i> LinkedIn</label>
+                            <input type="url" id="linkedin" name="linkedin" placeholder="linkedin.com/in/yourprofile">
+                        </div>
+                        <div class="form-group">
+                            <label for="github"><i class="fab fa-github"></i> GitHub</label>
+                            <input type="url" id="github" name="github" placeholder="github.com/yourusername">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="website"><i class="fas fa-globe"></i> Website</label>
+                        <input type="url" id="website" name="website" placeholder="yourwebsite.com">
+                    </div>
+
+                    <!-- Generate Button -->
+                    <button type="submit" class="btn-primary generate-btn" id="generateBtn">
+                        <i class="fas fa-magic"></i> Generate Portfolio
+                    </button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Loading Section -->
+            <div id="loadingSpinner" class="loading-section" style="display: none;">
+                <div class="spinner-container">
+                    <div class="spinner"></div>
+                    <h3>Generating your portfolio...</h3>
+                    <p>Our AI is crafting a professional portfolio tailored to your profile</p>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div id="resultContainer" class="result-section" style="display: none;">
+                <div class="result-header">
+                    <h2><i class="fas fa-file-alt"></i> Your Generated Portfolio</h2>
+                    <div class="result-actions">
+                        <button id="editBtn" class="btn-secondary">
+                            <i class="fas fa-edit"></i> Edit Portfolio
+                        </button>
+                        <button id="downloadBtn" class="btn-secondary" style="display: none;">
+                            <i class="fas fa-download"></i> Download PDF
+                        </button>
+                        <button id="regenerateBtn" class="btn-secondary">
+                            <i class="fas fa-sync"></i> Regenerate
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="portfolio-preview">
+                    <div id="portfolioContent" class="portfolio-content"></div>
+                </div>
+
+                <!-- Editable Portfolio Section -->
+                <div id="editablePortfolio" class="editable-portfolio" style="display: none;">
+                    <div class="editable-header">
+                        <h3><i class="fas fa-edit"></i> Edit Your Portfolio</h3>
+                        <p>Make any changes you want before downloading as PDF</p>
+                    </div>
+                    
+                    <div class="editable-content">
+                        <div class="editable-section">
+                            <label for="editSummary">Professional Summary</label>
+                            <textarea id="editSummary" rows="4" placeholder="Enter your professional summary..."></textarea>
+                        </div>
+                        
+                        <div class="editable-section">
+                            <label for="editSkills">Skills & Expertise</label>
+                            <textarea id="editSkills" rows="4" placeholder="Enter your skills and expertise..."></textarea>
+                        </div>
+                        
+                        <div class="editable-section">
+                            <label for="editExperience">Professional Experience</label>
+                            <textarea id="editExperience" rows="4" placeholder="Enter your professional experience..."></textarea>
+                        </div>
+                        
+                        <div class="editable-section">
+                            <label for="editEducation">Education</label>
+                            <textarea id="editEducation" rows="3" placeholder="Enter your education background..."></textarea>
+                        </div>
+                        
+                        <div class="editable-section">
+                            <label for="editProjects">Key Projects</label>
+                            <textarea id="editProjects" rows="4" placeholder="Enter your key projects..."></textarea>
+                        </div>
+                        
+                        <div class="editable-section">
+                            <label for="editAchievements">Achievements</label>
+                            <textarea id="editAchievements" rows="3" placeholder="Enter your achievements (one per line)..."></textarea>
+                        </div>
+                        
+                        <div class="editable-section">
+                            <label for="editTestimonials">Professional References</label>
+                            <textarea id="editTestimonials" rows="3" placeholder="Enter professional references..."></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="editable-actions">
+                        <button id="saveEditsBtn" class="btn-primary">
+                            <i class="fas fa-save"></i> Save Changes
+                        </button>
+                        <button id="cancelEditBtn" class="btn-secondary">
+                            <i class="fas fa-times"></i> Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <p>&copy; 2025 ForgeFolio. Powered by AI.</p>
+                <div class="footer-links">
+                    <a href="#about" onclick="showAbout()">About</a>
+                    <a href="#features" onclick="showFeatures()">Features</a>
+                    <a href="#contact" onclick="showContact()">Contact</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- About Modal -->
+    <div id="aboutModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-info-circle"></i> About ForgeFolio</h2>
+                <span class="close" onclick="closeModal('aboutModal')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p><strong>ForgeFolio</strong> is an AI-powered portfolio generator that creates professional, personalized portfolios in minutes. Built with cutting-edge technology and designed for modern professionals.</p>
+                
+                <h3>Key Features:</h3>
+                <ul>
+                    <li><strong>AI-Powered Generation:</strong> Uses advanced AI to create compelling portfolio content</li>
+                    <li><strong>Multiple Templates:</strong> 5 professional templates for different industries</li>
+                    <li><strong>Smart Customization:</strong> Automatically adapts content based on your profession</li>
+                    <li><strong>Professional Output:</strong> Generates achievements, testimonials, and contact info</li>
+                    <li><strong>PDF Export:</strong> Download your portfolio as a professional PDF</li>
+                </ul>
+                
+                <h3>Technology Stack:</h3>
+                <ul>
+                    <li><strong>Backend:</strong> Flask (Python)</li>
+                    <li><strong>AI Engine:</strong> Groq API with LLaMA models</li>
+                    <li><strong>Frontend:</strong> Modern HTML5, CSS3, JavaScript</li>
+                    <li><strong>Styling:</strong> Custom CSS with responsive design</li>
+                </ul>
+                
+                <p><em>Created by Jericho Sonon - A demonstration of AI-powered web applications.</em></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Modal -->
+    <div id="featuresModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-star"></i> Features</h2>
+                <span class="close" onclick="closeModal('featuresModal')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <i class="fas fa-magic"></i>
+                        <h3>AI-Powered Generation</h3>
+                        <p>Advanced AI creates professional, personalized portfolio content tailored to your profession and experience.</p>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-paint-brush"></i>
+                        <h3>Multiple Templates</h3>
+                        <p>Choose from 5 professional templates: Modern Tech, Creative Artist, Business Executive, Academic Researcher, and Freelancer.</p>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-users"></i>
+                        <h3>Sample Profiles</h3>
+                        <p>Quick-start with pre-filled sample profiles for Software Developer, Data Scientist, UI/UX Designer, and Marketing Manager.</p>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-trophy"></i>
+                        <h3>Professional Content</h3>
+                        <p>Auto-generates achievements, testimonials, contact information, and professional summaries.</p>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-download"></i>
+                        <h3>PDF Export</h3>
+                        <p>Download your portfolio as a professional PDF document ready for sharing or printing.</p>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-mobile-alt"></i>
+                        <h3>Responsive Design</h3>
+                        <p>Beautiful, modern interface that works perfectly on desktop, tablet, and mobile devices.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Modal -->
+    <div id="contactModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-envelope"></i> Contact</h2>
+                <span class="close" onclick="closeModal('contactModal')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="contact-info-section">
+                    <h3>Get in Touch</h3>
+                    <p>Have questions about ForgeFolio? Want to collaborate or provide feedback? I'd love to hear from you!</p>
+                    
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <i class="fas fa-user"></i>
+                            <div>
+                                <strong>Jericho Sonon</strong>
+                                <p>Developer & AI Enthusiast</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <strong>Email</strong>
+                                <p>jlsonon12@gmail.com</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <i class="fab fa-linkedin"></i>
+                            <div>
+                                <strong>LinkedIn</strong>
+                                <p>linkedin.com/in/jlsonon</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <i class="fab fa-github"></i>
+                            <div>
+                                <strong>GitHub</strong>
+                                <p>github.com/jlsonon12</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-message">
+                        <h4>Send a Message</h4>
+                        <form id="contactForm">
+                            <div class="form-group">
+                                <label for="contactName">Name</label>
+                                <input type="text" id="contactName" name="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contactEmail">Email</label>
+                                <input type="email" id="contactEmail" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contactMessage">Message</label>
+                                <textarea id="contactMessage" name="message" rows="4" required></textarea>
+                            </div>
+                            <button type="submit" class="btn-primary">
+                                <i class="fas fa-paper-plane"></i> Send Message
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        const skillsList = [];
+        const projectsList = [];
+        let selectedTemplate = 'tech_modern';
+        let currentPortfolio = null;
+
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeApp();
+        });
+
+        function initializeApp() {
+            setupEventListeners();
+            loadTemplates();
+            loadSampleProfiles();
+        }
+
+        function setupEventListeners() {
+            // Form submission
+            document.getElementById('portfolioForm').addEventListener('submit', handleFormSubmit);
+            
+            // Skills management
+            document.getElementById('addSkill').addEventListener('click', addSkill);
+            document.getElementById('skillInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    addSkill();
+                }
+            });
+            
+            // Projects management
+            document.getElementById('addProject').addEventListener('click', addProject);
+            document.getElementById('projectInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    addProject();
+                }
+            });
+
+            // Template selection
+            document.querySelectorAll('.template-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    selectTemplate(this.dataset.template);
+                });
+            });
+
+            // Sample profile buttons
+            document.querySelectorAll('.sample-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    loadSampleProfile(this.dataset.profile);
+                });
+            });
+
+            // Result actions
+            document.getElementById('editBtn').addEventListener('click', showEditMode);
+            document.getElementById('downloadBtn').addEventListener('click', downloadPDF);
+            document.getElementById('regenerateBtn').addEventListener('click', regeneratePortfolio);
+            document.getElementById('saveEditsBtn').addEventListener('click', saveEdits);
+            document.getElementById('cancelEditBtn').addEventListener('click', cancelEdit);
+        }
+
+        function selectTemplate(templateId) {
+            selectedTemplate = templateId;
+            document.querySelectorAll('.template-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            document.querySelector(`[data-template="${templateId}"]`).classList.add('selected');
+        }
+
+        function loadSampleProfile(profileId) {
+            fetch('/sample-profiles')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const profile = data.profiles[profileId];
+                        if (profile) {
+                            document.getElementById('name').value = profile.name;
+                            document.getElementById('profession').value = profile.profession;
+                            document.getElementById('experience').value = profile.experience;
+                            
+                            // Clear existing skills and projects
+                            skillsList.length = 0;
+                            projectsList.length = 0;
+                            
+                            // Add new skills and projects
+                            profile.skills.forEach(skill => {
+                                skillsList.push(skill);
+                            });
+                            profile.projects.forEach(project => {
+                                projectsList.push(project);
+                            });
+                            
+                            updateSkillsList();
+                            updateProjectsList();
+                            
+                            // Show success message
+                            showNotification('Sample profile loaded successfully!', 'success');
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading sample profile:', error);
+                    showNotification('Error loading sample profile', 'error');
+                });
+        }
+
+        function loadTemplates() {
+            fetch('/templates')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        console.log('Templates loaded:', data.templates);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading templates:', error);
+                });
+        }
+
+        function loadSampleProfiles() {
+            fetch('/sample-profiles')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        console.log('Sample profiles loaded:', data.profiles);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading sample profiles:', error);
+                });
+        }
+
+        function addSkill() {
+            const input = document.getElementById('skillInput');
+            const skill = input.value.trim();
+            if (skill && !skillsList.includes(skill)) {
+                skillsList.push(skill);
+                updateSkillsList();
+                input.value = '';
+            }
+        }
+
+        function addProject() {
+            const input = document.getElementById('projectInput');
+            const project = input.value.trim();
+            if (project && !projectsList.includes(project)) {
+                projectsList.push(project);
+                updateProjectsList();
+                input.value = '';
+            }
+        }
+
+        function updateSkillsList() {
+            const container = document.getElementById('skillsList');
+            container.innerHTML = skillsList.map(skill => `
+                <span class="skill-tag">
+                    ${skill}
+                    <button type="button" onclick="removeSkill('${skill}')" class="remove-btn">×</button>
+                </span>
+            `).join('');
+        }
+
+        function updateProjectsList() {
+            const container = document.getElementById('projectsList');
+            container.innerHTML = projectsList.map(project => `
+                <span class="project-tag">
+                    ${project}
+                    <button type="button" onclick="removeProject('${project}')" class="remove-btn">×</button>
+                </span>
+            `).join('');
+        }
+
+        function removeSkill(skill) {
+            const index = skillsList.indexOf(skill);
+            if (index > -1) {
+                skillsList.splice(index, 1);
+                updateSkillsList();
+            }
+        }
+
+        function removeProject(project) {
+            const index = projectsList.indexOf(project);
+            if (index > -1) {
+                projectsList.splice(index, 1);
+                updateProjectsList();
+            }
+        }
+
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            
+            const formData = {
+                name: document.getElementById('name').value,
+                profession: document.getElementById('profession').value,
+                experience: document.getElementById('experience').value,
+                education: document.getElementById('education').value,
+                skills: skillsList,
+                projects: projectsList,
+                template_id: selectedTemplate,
+                contact: {
+                    email: document.getElementById('email').value,
+                    phone: document.getElementById('phone').value,
+                    linkedin: document.getElementById('linkedin').value,
+                    github: document.getElementById('github').value,
+                    website: document.getElementById('website').value
+                }
+            };
+            
+            // Show loading
+            showLoading();
+            
+            fetch('/generate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                hideLoading();
+                
+                if (data.success) {
+                    currentPortfolio = data.content;
+                    displayPortfolio(data.content);
+                    showNotification('Portfolio generated successfully!', 'success');
+                } else {
+                    showNotification('Error: ' + (data.error || 'Failed to generate portfolio'), 'error');
+                }
+            })
+            .catch(error => {
+                hideLoading();
+                showNotification('Error: ' + error.message, 'error');
+            });
+        }
+
+        function displayPortfolio(content) {
+            const container = document.getElementById('portfolioContent');
+            const resultContainer = document.getElementById('resultContainer');
+            
+            // Generate HTML for the portfolio
+            let portfolioHTML = generatePortfolioHTML(content);
+            container.innerHTML = portfolioHTML;
+            
+            resultContainer.style.display = 'block';
+            resultContainer.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function generateJobApplicationHTML(content) {
+            let html = '<div class="job-application">';
+            
+            // Header with name and profession
+            const name = document.getElementById('name').value || 'Professional';
+            const profession = document.getElementById('profession').value || 'Professional';
+            
+            html += `<div class="header">
+                <h1>${name}</h1>
+                <div class="subtitle">${profession}</div>
+            </div>`;
+            
+            // Professional Summary
+            if (content.summary) {
+                html += `<div class="section">
+                    <h2>Professional Summary</h2>
+                    <p>${content.summary}</p>
+                </div>`;
+            }
+            
+            // Skills & Expertise
+            if (content.skills) {
+                html += `<div class="section">
+                    <h2>Skills & Expertise</h2>
+                    <div class="skills-content">${content.skills}</div>
+                </div>`;
+            }
+            
+            // Professional Experience
+            if (content.experience) {
+                html += `<div class="section">
+                    <h2>Professional Experience</h2>
+                    <div class="experience-content">${content.experience}</div>
+                </div>`;
+            }
+            
+            // Education
+            if (content.education) {
+                html += `<div class="section">
+                    <h2>Education</h2>
+                    <div class="education-content">${content.education}</div>
+                </div>`;
+            }
+            
+            // Key Projects
+            if (content.projects) {
+                html += `<div class="section">
+                    <h2>Key Projects</h2>
+                    <div class="projects-content">${content.projects}</div>
+                </div>`;
+            }
+            
+            // Achievements
+            if (content.achievements && Array.isArray(content.achievements)) {
+                html += `<div class="section">
+                    <h2>Achievements</h2>
+                    <ul class="achievements-list">`;
+                content.achievements.forEach(achievement => {
+                    html += `<li>${achievement}</li>`;
+                });
+                html += `</ul></div>`;
+            }
+            
+            // Testimonials
+            if (content.testimonials && Array.isArray(content.testimonials)) {
+                html += `<div class="section">
+                    <h2>Professional References</h2>
+                    <div class="testimonials">`;
+                content.testimonials.forEach(testimonial => {
+                    html += `<div class="testimonial">
+                        <div class="quote">"${testimonial.quote}"</div>
+                        <div class="author">${testimonial.author} - ${testimonial.position}</div>
+                    </div>`;
+                });
+                html += `</div></div>`;
+            }
+            
+            // Contact Information
+            if (content.contact) {
+                html += `<div class="section">
+                    <h2>Contact Information</h2>
+                    <div class="contact-grid">`;
+                
+                if (typeof content.contact === 'object' && content.contact !== null) {
+                    Object.entries(content.contact).forEach(([key, value]) => {
+                        html += `<div class="contact-item">
+                            <strong>${key.charAt(0).toUpperCase() + key.slice(1)}:</strong> ${value}
+                        </div>`;
+                    });
+                } else {
+                    html += `<div class="contact-item">${content.contact}</div>`;
+                }
+                
+                html += `</div></div>`;
+            }
+            
+            html += '</div>';
+            return html;
+        }
+
+        function generatePortfolioHTML(content) {
+            let html = '<div class="portfolio-layout">';
+            
+            // Template info
+            if (content.template) {
+                html += `<div class="template-info">Template: ${content.template.name}</div>`;
+            }
+            
+            // Summary
+            if (content.summary) {
+                html += `<section class="portfolio-section summary-section">
+                    <h2><i class="fas fa-user"></i> Professional Summary</h2>
+                    <p>${content.summary}</p>
+                </section>`;
+            }
+            
+            // Skills
+            if (content.skills) {
+                html += `<section class="portfolio-section skills-section">
+                    <h2><i class="fas fa-tools"></i> Skills & Expertise</h2>
+                    <div class="skills-content">${content.skills}</div>
+                </section>`;
+            }
+            
+            // Experience
+            if (content.experience) {
+                html += `<section class="portfolio-section experience-section">
+                    <h2><i class="fas fa-briefcase"></i> Professional Experience</h2>
+                    <div class="experience-content">${content.experience}</div>
+                </section>`;
+            }
+            
+            // Education
+            if (content.education) {
+                html += `<section class="portfolio-section education-section">
+                    <h2><i class="fas fa-graduation-cap"></i> Education</h2>
+                    <div class="education-content">${content.education}</div>
+                </section>`;
+            }
+            
+            // Projects
+            if (content.projects) {
+                html += `<section class="portfolio-section projects-section">
+                    <h2><i class="fas fa-project-diagram"></i> Key Projects</h2>
+                    <div class="projects-content">${content.projects}</div>
+                </section>`;
+            }
+            
+            // Achievements
+            if (content.achievements && Array.isArray(content.achievements)) {
+                html += `<section class="portfolio-section achievements-section">
+                    <h2><i class="fas fa-trophy"></i> Achievements</h2>
+                    <ul class="achievements-list">`;
+                content.achievements.forEach(achievement => {
+                    html += `<li>${achievement}</li>`;
+                });
+                html += `</ul></section>`;
+            }
+            
+            // Testimonials
+            if (content.testimonials && Array.isArray(content.testimonials)) {
+                html += `<section class="portfolio-section testimonials-section">
+                    <h2><i class="fas fa-quote-left"></i> Testimonials</h2>
+                    <div class="testimonials-grid">`;
+                content.testimonials.forEach(testimonial => {
+                    html += `<div class="testimonial-card">
+                        <p>"${testimonial.quote}"</p>
+                        <div class="testimonial-author">
+                            <strong>${testimonial.author}</strong>
+                            <span>${testimonial.position}</span>
+                        </div>
+                    </div>`;
+                });
+                html += `</div></section>`;
+            }
+            
+            // Contact
+            if (content.contact) {
+                html += `<section class="portfolio-section contact-section">
+                    <h2><i class="fas fa-envelope"></i> Contact Information</h2>
+                    <div class="contact-info">`;
+                
+                // Check if contact is an object or string
+                if (typeof content.contact === 'object' && content.contact !== null) {
+                    Object.entries(content.contact).forEach(([key, value]) => {
+                        html += `<div class="contact-item">
+                            <strong>${key.charAt(0).toUpperCase() + key.slice(1)}:</strong> ${value}
+                        </div>`;
+                    });
+                } else {
+                    // If contact is a string, display it as is
+                    html += `<div class="contact-item">${content.contact}</div>`;
+                }
+                
+                html += `</div></section>`;
+            }
+            
+            html += '</div>';
+            return html;
+        }
+
+        function showLoading() {
+            document.getElementById('loadingSpinner').style.display = 'block';
+            document.getElementById('resultContainer').style.display = 'none';
+            document.getElementById('generateBtn').disabled = true;
+        }
+
+        function hideLoading() {
+            document.getElementById('loadingSpinner').style.display = 'none';
+            document.getElementById('generateBtn').disabled = false;
+        }
+
+        function downloadPDF() {
+            if (!currentPortfolio) {
+                showNotification('No portfolio to download!', 'error');
+                return;
+            }
+            
+            // Create a new window with the portfolio content
+            const portfolioWindow = window.open('', '_blank');
+            const portfolioHTML = generateJobApplicationHTML(currentPortfolio);
+            
+            portfolioWindow.document.write(`
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>Professional Portfolio - Job Application</title>
+                    <style>
+                        body { 
+                            font-family: 'Times New Roman', serif; 
+                            margin: 0; 
+                            padding: 20px; 
+                            line-height: 1.4; 
+                            color: #333;
+                            background: white;
+                        }
+                        .header { 
+                            text-align: center; 
+                            margin-bottom: 30px; 
+                            border-bottom: 2px solid #333; 
+                            padding-bottom: 20px;
+                        }
+                        .header h1 { 
+                            font-size: 24px; 
+                            margin: 0; 
+                            font-weight: bold;
+                            text-transform: uppercase;
+                            letter-spacing: 1px;
+                        }
+                        .header .subtitle { 
+                            font-size: 14px; 
+                            margin: 5px 0 0 0; 
+                            color: #666;
+                            font-style: italic;
+                        }
+                        .section { 
+                            margin-bottom: 25px; 
+                            page-break-inside: avoid;
+                        }
+                        .section h2 { 
+                            font-size: 16px; 
+                            margin-bottom: 10px; 
+                            font-weight: bold;
+                            text-transform: uppercase;
+                            border-bottom: 1px solid #333;
+                            padding-bottom: 3px;
+                        }
+                        .section p { 
+                            margin: 8px 0; 
+                            text-align: justify;
+                        }
+                        .skills-grid { 
+                            display: grid; 
+                            grid-template-columns: 1fr 1fr; 
+                            gap: 15px; 
+                            margin: 10px 0;
+                        }
+                        .skill-category { 
+                            margin-bottom: 10px;
+                        }
+                        .skill-category strong { 
+                            display: block; 
+                            font-weight: bold; 
+                            margin-bottom: 5px;
+                        }
+                        .achievements-list { 
+                            list-style: none; 
+                            padding: 0; 
+                            margin: 10px 0;
+                        }
+                        .achievements-list li { 
+                            margin: 8px 0; 
+                            padding-left: 15px; 
+                            position: relative;
+                        }
+                        .achievements-list li:before { 
+                            content: "•"; 
+                            position: absolute; 
+                            left: 0; 
+                            font-weight: bold;
+                        }
+                        .testimonials { 
+                            margin: 15px 0;
+                        }
+                        .testimonial { 
+                            margin: 10px 0; 
+                            padding: 10px; 
+                            border-left: 3px solid #333;
+                            background: #f9f9f9;
+                        }
+                        .testimonial .quote { 
+                            font-style: italic; 
+                            margin-bottom: 5px;
+                        }
+                        .testimonial .author { 
+                            font-weight: bold; 
+                            font-size: 12px;
+                        }
+                        .contact-grid { 
+                            display: grid; 
+                            grid-template-columns: 1fr 1fr; 
+                            gap: 10px; 
+                            margin: 10px 0;
+                        }
+                        .contact-item { 
+                            margin: 5px 0;
+                        }
+                        .contact-item strong { 
+                            font-weight: bold;
+                        }
+                        @media print { 
+                            body { margin: 0; padding: 15px; }
+                            .section { page-break-inside: avoid; }
+                        }
+                    </style>
+                </head>
+                <body>
+                    ${portfolioHTML}
+                </body>
+                </html>
+            `);
+            
+            portfolioWindow.document.close();
+            
+            // Wait for content to load, then trigger print
+            setTimeout(() => {
+                portfolioWindow.print();
+                showNotification('PDF download initiated!', 'success');
+            }, 500);
+        }
+
+        function regeneratePortfolio() {
+            if (currentPortfolio) {
+                document.getElementById('portfolioForm').dispatchEvent(new Event('submit'));
+            }
+        }
+
+        function showEditMode() {
+            // Hide the preview and show the editable form
+            document.getElementById('portfolioContent').style.display = 'none';
+            document.getElementById('editablePortfolio').style.display = 'block';
+            document.getElementById('editBtn').style.display = 'none';
+            document.getElementById('downloadBtn').style.display = 'none';
+            
+            // Populate the editable fields with current content
+            populateEditableFields();
+        }
+
+        function populateEditableFields() {
+            if (!currentPortfolio) return;
+            
+            // Populate all editable fields
+            document.getElementById('editSummary').value = currentPortfolio.summary || '';
+            document.getElementById('editSkills').value = currentPortfolio.skills || '';
+            document.getElementById('editExperience').value = currentPortfolio.experience || '';
+            document.getElementById('editEducation').value = currentPortfolio.education || '';
+            document.getElementById('editProjects').value = currentPortfolio.projects || '';
+            
+            // Handle achievements array
+            if (currentPortfolio.achievements && Array.isArray(currentPortfolio.achievements)) {
+                document.getElementById('editAchievements').value = currentPortfolio.achievements.join('\n');
+            } else {
+                document.getElementById('editAchievements').value = currentPortfolio.achievements || '';
+            }
+            
+            // Handle testimonials
+            if (currentPortfolio.testimonials && Array.isArray(currentPortfolio.testimonials)) {
+                const testimonialsText = currentPortfolio.testimonials.map(t => 
+                    `"${t.quote}" - ${t.author}, ${t.position}`
+                ).join('\n\n');
+                document.getElementById('editTestimonials').value = testimonialsText;
+            } else {
+                document.getElementById('editTestimonials').value = currentPortfolio.testimonials || '';
+            }
+        }
+
+        function saveEdits() {
+            // Update the current portfolio with edited content
+            currentPortfolio.summary = document.getElementById('editSummary').value;
+            currentPortfolio.skills = document.getElementById('editSkills').value;
+            currentPortfolio.experience = document.getElementById('editExperience').value;
+            currentPortfolio.education = document.getElementById('editEducation').value;
+            currentPortfolio.projects = document.getElementById('editProjects').value;
+            
+            // Handle achievements
+            const achievementsText = document.getElementById('editAchievements').value;
+            currentPortfolio.achievements = achievementsText ? achievementsText.split('\n').filter(line => line.trim()) : [];
+            
+            // Handle testimonials
+            const testimonialsText = document.getElementById('editTestimonials').value;
+            if (testimonialsText.trim()) {
+                // Parse testimonials from text format
+                const testimonialLines = testimonialsText.split('\n\n').filter(line => line.trim());
+                currentPortfolio.testimonials = testimonialLines.map(line => {
+                    const match = line.match(/^"([^"]+)"\s*-\s*(.+),\s*(.+)$/);
+                    if (match) {
+                        return {
+                            quote: match[1],
+                            author: match[2],
+                            position: match[3]
+                        };
+                    }
+                    return {
+                        quote: line,
+                        author: 'Professional Reference',
+                        position: 'Colleague'
+                    };
+                });
+            } else {
+                currentPortfolio.testimonials = [];
+            }
+            
+            // Hide edit mode and show updated preview
+            document.getElementById('editablePortfolio').style.display = 'none';
+            document.getElementById('portfolioContent').style.display = 'block';
+            document.getElementById('editBtn').style.display = 'inline-flex';
+            document.getElementById('downloadBtn').style.display = 'inline-flex';
+            
+            // Update the preview with edited content
+            displayPortfolio(currentPortfolio);
+            
+            showNotification('Portfolio updated successfully!', 'success');
+        }
+
+        function cancelEdit() {
+            // Hide edit mode and show original preview
+            document.getElementById('editablePortfolio').style.display = 'none';
+            document.getElementById('portfolioContent').style.display = 'block';
+            document.getElementById('editBtn').style.display = 'inline-flex';
+            document.getElementById('downloadBtn').style.display = 'inline-flex';
+        }
+
+        function showNotification(message, type = 'info') {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.textContent = message;
+            
+            // Add to page
+            document.body.appendChild(notification);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        // Initialize template selection
+        document.querySelector('[data-template="tech_modern"]').classList.add('selected');
+        
+        // Modal functions
+        function showAbout() {
+            document.getElementById('aboutModal').style.display = 'block';
+        }
+        
+        function showFeatures() {
+            document.getElementById('featuresModal').style.display = 'block';
+        }
+        
+        function showContact() {
+            document.getElementById('contactModal').style.display = 'block';
+        }
+        
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+        
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        }
+        
+        // Contact form handling
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            const name = formData.get('name');
+            const email = formData.get('email');
+            const message = formData.get('message');
+            
+            // Simulate form submission
+            showNotification('Thank you for your message! I\'ll get back to you soon.', 'success');
+            this.reset();
+            closeModal('contactModal');
+        });
+    </script>
+</body>
+</html>

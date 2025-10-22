@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ForgeFolio - AI-Powered Portfolio Generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1><i class="fas fa-magic"></i> ForgeFolio</h1>
+            <p class="subtitle">AI-Powered Portfolio Generator</p>
+        </header>
+
+        <main class="main-content">
+            <div class="form-container">
+                <form id="portfolioForm" class="portfolio-form">
+                    <div class="form-group">
+                        <label for="name">
+                            <i class="fas fa-user"></i> Full Name *
+                        </label>
+                        <input type="text" id="name" name="name" required placeholder="Enter your full name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="profession">
+                            <i class="fas fa-briefcase"></i> Profession *
+                        </label>
+                        <input type="text" id="profession" name="profession" required placeholder="e.g., Software Developer, Designer, etc.">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="experience">
+                            <i class="fas fa-chart-line"></i> Experience
+                        </label>
+                        <textarea id="experience" name="experience" rows="4" placeholder="Describe your professional experience, achievements, and career highlights..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="skills">
+                            <i class="fas fa-tools"></i> Skills
+                        </label>
+                        <div class="skills-input">
+                            <input type="text" id="skillInput" placeholder="Add a skill and press Enter">
+                            <button type="button" id="addSkill" class="btn-secondary">
+                                <i class="fas fa-plus"></i> Add
+                            </button>
+                        </div>
+                        <div id="skillsList" class="skills-list"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="projects">
+                            <i class="fas fa-project-diagram"></i> Projects
+                        </label>
+                        <div class="projects-input">
+                            <input type="text" id="projectInput" placeholder="Add a project and press Enter">
+                            <button type="button" id="addProject" class="btn-secondary">
+                                <i class="fas fa-plus"></i> Add
+                            </button>
+                        </div>
+                        <div id="projectsList" class="projects-list"></div>
+                    </div>
+
+                    <button type="submit" class="btn-primary" id="generateBtn">
+                        <i class="fas fa-magic"></i> Generate Portfolio
+                    </button>
+                </form>
+            </div>
+
+            <div id="loadingSpinner" class="loading-spinner" style="display: none;">
+                <div class="spinner"></div>
+                <p>Generating your portfolio...</p>
+            </div>
+
+            <div id="resultContainer" class="result-container" style="display: none;">
+                <div class="result-header">
+                    <h2><i class="fas fa-file-alt"></i> Your Generated Portfolio</h2>
+                    <button id="copyBtn" class="btn-secondary">
+                        <i class="fas fa-copy"></i> Copy to Clipboard
+                    </button>
+                </div>
+                <div id="portfolioContent" class="portfolio-content"></div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2024 ForgeFolio. Powered by Jericho Sonon.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Skills management
+        const skillsList = [];
+        const projectsList = [];
+        
+        document.getElementById('addSkill').addEventListener('click', addSkill);
+        document.getElementById('addProject').addEventListener('click', addProject);
+        
+        document.getElementById('skillInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                addSkill();
+            }
+        });
+        
+        document.getElementById('projectInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                addProject();
+            }
+        });
+        
+        function addSkill() {
+            const input = document.getElementById('skillInput');
+            const skill = input.value.trim();
+            if (skill && !skillsList.includes(skill)) {
+                skillsList.push(skill);
+                updateSkillsList();
+                input.value = '';
+            }
+        }
+        
+        function addProject() {
+            const input = document.getElementById('projectInput');
+            const project = input.value.trim();
+            if (project && !projectsList.includes(project)) {
+                projectsList.push(project);
+                updateProjectsList();
+                input.value = '';
+            }
+        }
+        
+        function updateSkillsList() {
+            const container = document.getElementById('skillsList');
+            container.innerHTML = skillsList.map(skill => `
+                <span class="skill-tag">
+                    ${skill}
+                    <button type="button" onclick="removeSkill('${skill}')" class="remove-btn">×</button>
+                </span>
+            `).join('');
+        }
+        
+        function updateProjectsList() {
+            const container = document.getElementById('projectsList');
+            container.innerHTML = projectsList.map(project => `
+                <span class="project-tag">
+                    ${project}
+                    <button type="button" onclick="removeProject('${project}')" class="remove-btn">×</button>
+                </span>
+            `).join('');
+        }
+        
+        function removeSkill(skill) {
+            const index = skillsList.indexOf(skill);
+            if (index > -1) {
+                skillsList.splice(index, 1);
+                updateSkillsList();
+            }
+        }
+        
+        function removeProject(project) {
+            const index = projectsList.indexOf(project);
+            if (index > -1) {
+                projectsList.splice(index, 1);
+                updateProjectsList();
+            }
+        }
+        
+        // Form submission
+        document.getElementById('portfolioForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                name: document.getElementById('name').value,
+                profession: document.getElementById('profession').value,
+                experience: document.getElementById('experience').value,
+                skills: skillsList,
+                projects: projectsList
+            };
+            
+            // Show loading spinner
+            document.getElementById('loadingSpinner').style.display = 'block';
+            document.getElementById('resultContainer').style.display = 'none';
+            document.getElementById('generateBtn').disabled = true;
+            
+            try {
+                const response = await fetch('/generate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    displayPortfolio(data.content);
+                } else {
+                    alert('Error: ' + (data.error || 'Failed to generate portfolio'));
+                }
+            } catch (error) {
+                alert('Error: ' + error.message);
+            } finally {
+                document.getElementById('loadingSpinner').style.display = 'none';
+                document.getElementById('generateBtn').disabled = false;
+            }
+        });
+        
+        function displayPortfolio(content) {
+            const container = document.getElementById('portfolioContent');
+            const resultContainer = document.getElementById('resultContainer');
+            
+            // Format the content
+            let formattedContent = '';
+            if (typeof content === 'object') {
+                for (const [section, text] of Object.entries(content)) {
+                    if (text) {
+                        formattedContent += `<h3>${section.charAt(0).toUpperCase() + section.slice(1)}</h3><p>${text.replace(/\n/g, '<br>')}</p>`;
+                    }
+                }
+            } else {
+                formattedContent = content.replace(/\n/g, '<br>');
+            }
+            
+            container.innerHTML = formattedContent;
+            resultContainer.style.display = 'block';
+            resultContainer.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Copy to clipboard functionality
+        document.getElementById('copyBtn').addEventListener('click', function() {
+            const content = document.getElementById('portfolioContent').textContent;
+            navigator.clipboard.writeText(content).then(function() {
+                alert('Portfolio copied to clipboard!');
+            });
+        });
+    </script>
+</body>
+</html>
