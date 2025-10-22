@@ -1,5 +1,5 @@
 """
-Analytics and Statistics for PortfolioForge
+Analytics and Statistics for ForgeFolio
 Track usage and provide insights
 """
 import json
@@ -8,7 +8,7 @@ from datetime import datetime
 from typing import Dict, List, Any
 
 class Analytics:
-    """Simple analytics tracking for PortfolioForge"""
+    """Simple analytics tracking for ForgeFolio"""
     
     def __init__(self, data_file: str = 'analytics.json'):
         self.data_file = data_file

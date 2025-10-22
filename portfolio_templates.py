@@ -1,5 +1,5 @@
 """
-Portfolio Templates for PortfolioForge
+Portfolio Templates for ForgeFolio
 Multiple professional templates for different industries and styles
 """
 from typing import Dict, List, Any
