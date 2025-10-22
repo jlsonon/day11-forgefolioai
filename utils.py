@@ -44,6 +44,27 @@ def validate_input(data: Dict[str, Any]) -> bool:
         for project in data['projects']:
             if not isinstance(project, str):
                 return False
+
+    # Validate education if provided
+    if 'education' in data and data['education']:
+        # Accept either a string (legacy) or a list of dicts (advanced)
+        if isinstance(data['education'], str):
+            pass  # ok
+        elif isinstance(data['education'], list):
+            for edu in data['education']:
+                if not isinstance(edu, dict):
+                    return False
+                # school and degree are recommended but not strictly required
+                allowed_keys = {'school', 'degree', 'field', 'start_date', 'end_date'}
+                # Must not contain unexpected keys
+                if any(k not in allowed_keys for k in edu.keys()):
+                    return False
+                # If dates provided, ensure strings
+                for k in ['school', 'degree', 'field', 'start_date', 'end_date']:
+                    if k in edu and edu[k] is not None and not isinstance(edu[k], str):
+                        return False
+        else:
+            return False
     
     return True
 

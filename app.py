@@ -7,7 +7,7 @@ from analytics import analytics
 
 app = Flask(__name__)
 
-# Initialize Groq client (will be created when needed)
+# Initialize Groq client (lazy initialization)
 groq_client = None
 
 @app.route('/')
@@ -32,7 +32,7 @@ def generate_portfolio():
                 groq_client = GroqClient()
             except ValueError as e:
                 return jsonify({
-                    'error': 'Groq API key not configured. Please set GROQ_API_KEY environment variable.'
+                    'error': 'Groq API key not configured. Please set GROQ_API_KEY environment variable or enable DEMO_MODE=true.'
                 }), 500
         
         # Extract user information

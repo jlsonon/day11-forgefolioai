@@ -1,28 +1,30 @@
 {
-  "total_generations": 57,
+  "total_generations": 103,
   "templates_used": {
-    "sample_profiles": 36,
-    "tech_modern": 11,
-    "creative_artist": 4,
+    "sample_profiles": 72,
+    "tech_modern": 17,
+    "creative_artist": 8,
     "academic_researcher": 3,
     "business_executive": 3
   },
   "professions": {
-    "demo": 36,
+    "demo": 72,
     "Software Developer": 3,
-    "Data Scientist": 7,
-    "Senior Software Developer": 8,
-    "UI/UX Designer": 3
+    "Data Scientist": 9,
+    "Senior Software Developer": 14,
+    "UI/UX Designer": 3,
+    "Marketing Manager": 1,
+    "asfasf": 1
   },
   "daily_stats": {
-    "2025-10-22": 57
+    "2025-10-22": 103
   },
   "features_used": {
-    "sample_profiles": 36,
-    "template_selection": 10,
+    "sample_profiles": 72,
+    "template_selection": 14,
     "copy_to_clipboard": 0,
     "regenerate": 0
   },
   "start_date": "2025-10-22T19:09:38.715004",
-  "last_updated": "2025-10-22T20:37:22.767226"
+  "last_updated": "2025-10-22T22:41:14.589077"
 }

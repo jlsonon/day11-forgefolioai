@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 """
-PortfolioForge Startup Script
-Run this to start the PortfolioForge application
+ForgeFolio Startup Script
+Run this to start the ForgeFolio application
 """
 import os
 import sys
 
 def main():
-    """Start the PortfolioForge application"""
-    print("Starting PortfolioForge...")
+    """Start the ForgeFolio application"""
+    print("Starting ForgeFolio...")
     
     # Set demo mode if no API key is provided
     if not os.getenv('GROQ_API_KEY'):
@@ -21,7 +21,7 @@ def main():
     port = int(os.environ.get('PORT', 5000))
     debug = os.environ.get('DEBUG', 'False').lower() == 'true'
     
-    print(f"PortfolioForge is running on http://localhost:{port}")
+    print(f"ForgeFolio is running on http://localhost:{port}")
     print("Press Ctrl+C to stop the server")
     
     app.run(host='0.0.0.0', port=port, debug=debug)
