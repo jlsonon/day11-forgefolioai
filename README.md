@@ -218,8 +218,10 @@ If you encounter any issues or have questions:
 - [ ] Portfolio preview and editing
 - [ ] Integration with LinkedIn API
 - [ ] Advanced customization options
-
 ---
+## Author
 
-
-**Made with ❤️ using Flask and Groq AI**
+### Jericho Sonon
+#### Medium: [medium.com/@jlsonon12](https://medium.com/@jlsonon12)
+#### GitHub: [github.com/jlsonon](https://github.com/jlsonon)
+#### LinkedIn: [linkedin.com/in/jlsonon](https://www.linkedin.com/in/jlsonon/)
